@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="main.js"></script>
+    <title>Login, Signup, and Bank Account</title>
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 600px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        .form-container,
+        .account-container {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 40px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #007BFF;
+        }
+
+        label {
+            display: block;
+            margin: 20px 0 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 20px;
+            margin: 25px 0;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #switchForm {
+            margin-top: 40px;
+            cursor: pointer;
+            color: #007BFF;
+            text-decoration: underline;
+        }
+
+        .account-container {
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-width: 900px;
+            padding: 40px;
+            text-align: center;
+            display: none;
+        }
+
+        .account-container h1 {
+            color: #007BFF;
+        }
+
+        .account-container .user-info,
+        .account-container .balance-section,
+        .account-container .transaction-section {
+            margin-top: 40px;
+        }
+
+        .account-container label {
+            margin-bottom: 20px;
+        }
+
+        .account-container input {
+            margin-bottom: 30px;
+            position: relative;
+            right: 20px;
+        }
+
+        .account-container button {
+            cursor: pointer;
+        }
+
+        .account-container #balance {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .account-container .transaction-section {
+            margin-top: 40px;
+        }
+
+        .account-container #depositForm,
+        .account-container #withdrawForm,
+        .account-container #transferSection {
+            margin-top: 35px;
+        }
+
+        .account-container #depositForm button,
+        .account-container #withdrawForm button,
+        .account-container #transferSection button {
+            cursor: pointer;
+        }
+
+        .account-container #depositForm button {
+            background-color: #28a745;
+        }
+
+        .account-container #withdrawForm button {
+            background-color: #dc3545;
+        }
+
+        .account-container #transferSection button {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        #withdraw {
+            background-color: red;
+        }
+
+        #deposit {
+            background-color: green;
+        }
+
+        .transaction-history {
+            margin-top: 40px;
+            overflow: hidden;
+            max-height: 200px;
+            /* Set a max height for the transaction history window */
+            overflow-y: auto;
+            /* Enable vertical scrollbar if content overflows */
+        }
+
+        #transactionList {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #transactionList li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="mainContainer">
+        <!-- Login and Signup Forms -->
+        <div class="form-container" id="loginForm">
+            <form>
+                <h1>Login</h1>
+                <label for="loginId">ID:</label>
+                <input type="text" id="loginId" name="loginId" required>
+                <label for="loginName">Name:</label>
+                <input type="text" id="loginName" name="loginName" required>
+                <label for="loginSurname">Surname:</label>
+                <input type="text" id="loginSurname" name="loginSurname" required>
+                <button type="submit" id="loginButton" onclick="main(event)">Login</button>
+                <p id="switchForm">Don't have an account? <span onclick="toggleForm()">Signup</span></p>
+            </form>
+        </div>
+
+        <div class="form-container" id="signupForm" style="display: none;">
+            <form>
+                <h1>Sign Up</h1>
+                <form>
+                    <label for="signupId">ID:</label>
+                    <input type="text" id="signupId" name="signupId" required>
+                    <label for="signupName">Name:</label>
+                    <input type="text" id="signupName" name="signupName" required>
+                    <label for="signupSurname">Surname:</label>
+                    <input type="text" id="signupSurname" name="signupSurname" required>
+                    <button type="submit" id="signupButton" onclick="main(event)">Sign Up</button>
+                    <p id="switchForm">Already have an account? <span onclick="toggleForm()">Login</span></p>
+                </form>
+        </div>
+
+        <!-- Bank Account Section (initially hidden) -->
+        <div class="account-container" id="bankAccountSection">
+            <h1>Bank Account Balance</h1>
+
+            <!-- User Information Section -->
+            <div class="user-info">
+                <p>ID: <span id="userId"></span></p>
+                <p>Name: <span id="userName"></span></p>
+                <p>Surname: <span id="userSurname"></span></p>
+            </div>
+
+            <!-- Current Balance Section -->
+            <div class="balance-section">
+                <h2>Current Balance</h2>
+                <p id="balance"></p>
+            </div>
+            <!-- Transaction History Section -->
+            <div class="transaction-history">
+                <h2>Transaction History</h2>
+                <ul id="transactionList"></ul>
+            </div>
+
+            <!-- Deposit Section -->
+            <div class="transaction-section">
+                <h2>Deposit Money</h2>
+                <label for="depositAmount">Amount:</label>
+                <input type="number" id="depositAmount" name="depositAmount" required>
+                <button type="submit" id="deposit" onclick="deposit()">Deposit</button>
+            </div>
+
+            <!-- Withdraw Section -->
+            <div class=" transaction-section">
+                <h2>Withdraw Money</h2>
+
+                <label for="withdrawAmount">Amount:</label>
+                <input type="number" id="withdrawAmount" name="withdrawAmount" required>
+                <button type="submit" id="withdraw" onclick="withdraw()">Withdraw</button>
+
+            </div>
+            <!-- Transfer Section -->
+            <div class="transaction-section" id="transferSection">
+                <h2>Transfer Money</h2>
+                <label for="recipientName">Person id:</label>
+                <input type="text" id="personId" name="recipientName" required>
+                <label for="transferAmount">Amount:</label>
+                <input type="number" id="transferAmount" name="transferAmount" required>
+                <button type="button" onclick="transfer()">Transfer</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const bankAccountSection = document.getElementById('bankAccountSection');
+            if (loginForm.style.display === 'block') {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+                bankAccountSection.style.display = 'none';
+            } else {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+                bankAccountSection.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
