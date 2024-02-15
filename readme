@@ -1,5 +1,5 @@
 Banking System
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
 This project is a simple web-based banking system implemented using HTML, CSS,
 and JavaScript. It allows users to log in, sign up, and manage a basic bank account. Users can deposit, 
 withdraw, and transfer money between accounts. The system includes a transaction history
