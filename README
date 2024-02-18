@@ -1,0 +1,23 @@
+Banking System
+--------------------------------------------------------------------------------------------------------------------
+This project is a simple web-based banking system implemented using HTML, CSS,
+and JavaScript. It allows users to log in, sign up, and manage a basic bank account. Users can deposit, 
+withdraw, and transfer money between accounts. The system includes a transaction history
+feature, displaying a scrollable window of recent transactions.
+
+Key Features:
+
+->User authentication with login and signup forms.
+->Account balance management with deposit, withdraw, and transfer functionalities.
+->Transaction history display, showing date-stamped transactions.
+->Local storage integration to persist user data between sessions.
+
+How to Use:
+
+1.Login or Signup: Use the login form with an existing ID or sign up to create a new account.
+2.Bank Account Section: After logging in, view your bank account details, including balance and user information.
+3.Transaction Management: Deposit, withdraw, or transfer money to/from your account.
+4.Transaction History: Track your recent transactions with a scrollable history window.
+
+Contributions:
+Contributions and improvements are welcome! Feel free to fork the repository, make changes, and submit pull requests.
